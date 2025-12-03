@@ -21,8 +21,6 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        // dd('here');
-        // dd($request);
         Category::create([
             'name' => $request->name,
         ]);
@@ -52,9 +50,7 @@ class CategoryController extends Controller
 
     public function delete($id)
     {
-        // dd($id);
         $category = Category::find($id);
-        // dd($category);
         $category->delete();
 
         return redirect()->route('categories.index');
