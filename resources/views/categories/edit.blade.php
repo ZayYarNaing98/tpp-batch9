@@ -21,6 +21,17 @@
                 <div class="card-body">
                     <label for="name" class="form-input-label mb-2">Category Name:</label>
                     <input type="text" class="form-control" value="{{ $category->name }}" name="name" />
+                    @error('name')
+                        <div class="invalid-feedback d-block">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="card-body">
+                    <label for="image" class="form-input-label mb-2">Category Image:</label>
+                    <img src="{{ asset('categoryImages/' . $category->image) }}" alt="{{ $category->image }}"
+                        style="width: 100px; height: auto;">
+
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-outline-primary btn-sm me-2" type="submit">Update</button>
