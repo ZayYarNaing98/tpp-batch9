@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    {{-- {{dd($categories)}} --}}
     <div class="container">
         <div class="card mt-4">
             <div class="card-header">
@@ -49,6 +50,14 @@
                             {{ $message }}
                         </div>
                     @enderror
+                </div>
+                <div class="card-body">
+                    <label for="category" class="form-label">Select Your Category:</label>
+                    <select name="category_id" id="category_id" class="form-select">
+                        @foreach ($categories as $category)
+                            <option value="{{$category->id}}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="card-body">
                     <label for="image" class="form-label @error('image') is-invalid @enderror">Upload Your Product

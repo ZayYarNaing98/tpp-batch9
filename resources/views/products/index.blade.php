@@ -12,6 +12,7 @@
 
 <body>
     <div class="container">
+        {{-- {{dd($products)}} --}}
         <h1 class="my-4">Product Lists</h1>
         <a href="{{ route('products.create') }}" class="btn btn-outline-success mb-4 btn-sm">+ Create</a>
         <table class="table table-bordered">
@@ -21,6 +22,7 @@
                     <th class="bg-primary text-white">NAME</th>
                     <th class="bg-primary text-white">DESCRIPTION</th>
                     <th class="bg-primary text-white">PRICE</th>
+                    <th class="bg-primary text-white">Category</th>
                     <th class="bg-primary text-white">IMAGE</th>
                     <th class="bg-primary text-white">ACTION</th>
                 </tr>
@@ -32,6 +34,9 @@
                         <th>{{ $data['name'] }}</th>
                         <th>{{ $data['description'] }}</th>
                         <th>{{ $data['price'] }}</th>
+                        <th>
+                            {{ $data['category'] ? $data["category"]['name'] : "-" }}
+                        </th>
                         <th>
                             <img src="{{ asset('productImages/' . $data->image) }}" alt="{{ $data->image }}"
                                 style="width: 50px; height: auto;" />
