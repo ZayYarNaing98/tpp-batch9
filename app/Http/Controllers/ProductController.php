@@ -5,19 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
 
         return view('products.index', compact('products'));
     }
 
     public function create()
     {
-        return view('products.create');
+        $categories = Category::get();
+
+        return view('products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -27,6 +30,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|integer',
             'image' => 'required',
+            'category_id' => 'required'
         ]);
 
         if ($request->hasFile('image')) {
