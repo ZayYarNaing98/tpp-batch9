@@ -30,7 +30,8 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|integer',
             'image' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'status' => 'nullable',
         ]);
 
         if ($request->hasFile('image')) {
@@ -40,6 +41,8 @@ class ProductController extends Controller
 
             $data = array_merge($data, ['image' => $imageName]);
         }
+
+        $data['status'] = $request->has('status') ? true : false;
 
         Product::create($data);
 
