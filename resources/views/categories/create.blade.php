@@ -28,8 +28,8 @@
                     @enderror
                 </div>
                 <div class="card-body">
-                     <label for="image" class="form-input-label mb-2">Category Image:</label>
-                    <input type="file" class="form-control" name="image"/>
+                    <label for="image" class="form-input-label mb-2">Category Image:</label>
+                    <input type="file" class="form-control" name="image" />
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-outline-primary btn-sm me-2">Create</button>

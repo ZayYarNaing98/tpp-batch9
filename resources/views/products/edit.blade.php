@@ -30,6 +30,10 @@
                     <label for="price" class="form-label">Price :</label>
                     <input type="text" name="price" class="form-control" value="{{ $product->price }}" />
                 </div>
+                <div class="card-body">
+                    <label for="price" class="form-label">Product Image :</label>
+                    <img src="{{ asset('productImages/' . $product->image) }}" alt="{{ $product->image }}"  style="width: auto; height: 50px;"/>
+                </div>
                 <div class="card-footer">
                     <button class="btn btn-primary btn-sm" type="submit">Update</button>
                     <a href="{{ route('products.index') }}" class="btn btn-secondary btn-sm">Back</a>

@@ -21,6 +21,7 @@
                     <th class="bg-primary text-white">NAME</th>
                     <th class="bg-primary text-white">DESCRIPTION</th>
                     <th class="bg-primary text-white">PRICE</th>
+                    <th class="bg-primary text-white">IMAGE</th>
                     <th class="bg-primary text-white">ACTION</th>
                 </tr>
             </thead>
@@ -31,6 +32,10 @@
                         <th>{{ $data['name'] }}</th>
                         <th>{{ $data['description'] }}</th>
                         <th>{{ $data['price'] }}</th>
+                        <th>
+                            <img src="{{ asset('productImages/' . $data->image) }}" alt="{{ $data->image }}"
+                                style="width: 50px; height: auto;" />
+                        </th>
                         <th class="d-flex">
                             <a href="{{ route('products.edit', ['id' => $data->id]) }}"
                                 class="btn btn-outline-secondary me-2 btn-sm">Edit</a>

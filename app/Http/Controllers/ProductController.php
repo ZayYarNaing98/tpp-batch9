@@ -22,7 +22,22 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        Product::create($request->all());
+        $data = $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|integer',
+            'image' => 'required',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+
+            $request->image->move(public_path('productImages'), $imageName);
+
+            $data = array_merge($data, ['image' => $imageName]);
+        }
+
+        Product::create($data);
 
         return redirect()->route('products.index');
     }
@@ -34,7 +49,7 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    public function update(Request $request)
+    public function update(ProductUpdateRequest $request)
     {
         $product = Product::find($request->id);
 
@@ -45,7 +60,6 @@ class ProductController extends Controller
         ]);
 
         return redirect()->route('products.index');
-
     }
 
     public function delete($id)
