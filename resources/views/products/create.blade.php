@@ -69,6 +69,10 @@
                         </div>
                     @enderror
                 </div>
+                <div class="card-body">
+                    <label for="" class="form-label me-3">Active or Expired:</label>
+                    <input type="checkbox" class="form-check-input mb-2" name="status" role="switch" checked>
+                </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary btn-sm">+Create</button>
                     <a href="{{ route('products.index') }}" class="btn btn-secondary btn-sm">Back</a>

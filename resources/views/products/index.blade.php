@@ -24,6 +24,7 @@
                     <th class="bg-primary text-white">PRICE</th>
                     <th class="bg-primary text-white">Category</th>
                     <th class="bg-primary text-white">IMAGE</th>
+                    <th class="bg-primary text-white">STATUS</th>
                     <th class="bg-primary text-white">ACTION</th>
                 </tr>
             </thead>
@@ -40,6 +41,13 @@
                         <th>
                             <img src="{{ asset('productImages/' . $data->image) }}" alt="{{ $data->image }}"
                                 style="width: 50px; height: auto;" />
+                        </th>
+                        <th>
+                            @if ($data->status == 1)
+                                <span class="text-success">Active</span>
+                            @else
+                                <span class="text-danger">Expired</span>
+                            @endif
                         </th>
                         <th class="d-flex">
                             <a href="{{ route('products.edit', ['id' => $data->id]) }}"
