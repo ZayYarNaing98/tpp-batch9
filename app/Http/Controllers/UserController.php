@@ -33,6 +33,11 @@ class UserController extends Controller
         }
 
         $validatedData['status'] = $request->has('status') ? true : false;
+        
+        // Hash password if it exists
+        if (isset($validatedData['password'])) {
+            $validatedData['password'] = bcrypt($validatedData['password']);
+        }
 
         User::create($validatedData);
 
