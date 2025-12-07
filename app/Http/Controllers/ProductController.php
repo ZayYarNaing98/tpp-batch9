@@ -62,10 +62,10 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-
         $product = $this->productRepository->show($id);
+        $categories = $this->categoryRepository->index();
 
-        return view('products.edit', compact('product'));
+        return view('products.edit', compact('product', 'categories'));
     }
 
     public function update(ProductUpdateRequest $request)
@@ -76,6 +76,8 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'category_id' => $request->category_id,
+            'status' => $request->has('status') ? true : false,
         ]);
 
         return redirect()->route('products.index');
