@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,10 +22,8 @@ Route::get('/blogs/{id}', function($id){
     return "This is Blog Detail => $id";
 });
 
-// Naming Route
-Route::get('/dashboard', function(){
-    return "Welcome TPP Program";
-})->name('dashboard.tpp');
+// Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Redirect Route
 Route::get('/tpp', function(){

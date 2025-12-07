@@ -1,59 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container">
-        <h1 class="my-4">Users Listing</h1>
-        <a href="{{ route('users.create') }}" class="btn btn-outline-success my-2 btn-sm">+Create</a>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th class="bg-secondary text-white">#</th>
-                    <th class="bg-secondary text-white">NAME</th>
-                    <th class="bg-secondary text-white">EMAIL</th>
-                    <th class="bg-secondary text-white">PHONE</th>
-                    <th class="bg-secondary text-white">ADDRESS</th>
-                    <th class="bg-secondary text-white">GENDER</th>
-                    <th class="bg-secondary text-white">STATUS</th>
-                    <th class="bg-secondary text-white">ACTION</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                    <tr>
-                        <td>{{$user->id}}</td>
-                        <td>{{ $user->name }}</td>
-                        <td> {{ $user->email }} </td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ $user->address }}</td>
-                        <td>{{ $user->gender }}</td>
-                        <td>
-                            @if ($user->status === 1)
-                                <span class="text-success">
-                                    ACTIVE
-                                </span>
-                            @else
-                                <span class="text-danger">
-                                    SUSPEND
-                                </span>
-                            @endif
-                        </td>
-                        <td></td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+@extends('layouts.dashboard')
+
+@section('title', 'Users')
+@section('page-title', 'Users')
+
+@section('content')
+    <div class="page-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1>Users Listing</h1>
+                <p>Manage system users</p>
+            </div>
+            <a href="{{ route('users.create') }}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Create User
+            </a>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-    </script>
-</body>
-</html>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Gender</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td class="fw-bold">{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->phone ?? '-' }}</td>
+                                <td>{{ $user->address ?? '-' }}</td>
+                                <td>{{ $user->gender ?? '-' }}</td>
+                                <td>
+                                    @if ($user->status === 1)
+                                        <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-danger">Inactive</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-secondary" disabled>
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection

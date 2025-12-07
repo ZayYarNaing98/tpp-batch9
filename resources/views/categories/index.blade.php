@@ -1,55 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.dashboard')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+@section('title', 'Categories')
+@section('page-title', 'Categories')
 
-<body>
-    <div class="container">
-        <h2 class="mt-4">Category Listing</h2>
-        <a href="{{ route('categories.create') }}" class="btn btn-outline-success btn-sm mb-4">+ Create</a>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th class="bg-secondary text-white">#</th>
-                    <th class="bg-secondary text-white">NAME</th>
-                    <th class="bg-secondary text-white">IMAGE</th>
-                    <th class="bg-secondary text-white">ACTION</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($data as $category)
-                    <tr>
-                        <td>{{ $category['id'] }}</td>
-                        <td>{{ $category['name'] }}</td>
-                        <td>
-                            <img src="{{ asset('categoryImages/' . $category->image) }}" alt="{{ $category->image }}"
-                                style="width: 100px; height: auto;">
-                        </td>
-                        <td class="d-flex">
-                            <a href="{{ route('categories.edit', ['id' => $category->id]) }}"
-                                class="btn btn-outline-secondary btn-sm">edit</a>
-                            <form action="{{ route('categories.delete', ['id' => $category->id]) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="ms-2 btn btn-outline-danger btn-sm">delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+@section('content')
+    <div class="page-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1>Category Listing</h1>
+                <p>Manage product categories</p>
+            </div>
+            <a href="{{ route('categories.create') }}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Create Category
+            </a>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $category)
+                            <tr>
+                                <td>{{ $category['id'] }}</td>
+                                <td class="fw-bold">{{ $category['name'] }}</td>
+                                <td>
+                                    <img src="{{ asset('categoryImages/' . $category->image) }}" alt="{{ $category->image }}"
+                                        style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ route('categories.edit', ['id' => $category->id]) }}"
+                                            class="btn btn-outline-secondary btn-sm">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </a>
+                                        <form action="{{ route('categories.delete', ['id' => $category->id]) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-danger btn-sm"
+                                                onclick="return confirm('Are you sure you want to delete this category?')">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection
