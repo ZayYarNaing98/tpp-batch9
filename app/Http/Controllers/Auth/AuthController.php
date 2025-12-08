@@ -15,6 +15,10 @@ class AuthController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
+            // Redirect clients to products list, others to dashboard
+            if (Auth::user()->hasRole('Client')) {
+                return redirect()->route('products.index');
+            }
             return redirect()->route('dashboard.index');
         }
         return view('auth.login');
@@ -35,6 +39,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
+            
+            // Redirect clients to products list, others to dashboard
+            if (Auth::user()->hasRole('Client')) {
+                return redirect()->intended(route('products.index'));
+            }
+            
             return redirect()->intended(route('dashboard.index'));
         }
 

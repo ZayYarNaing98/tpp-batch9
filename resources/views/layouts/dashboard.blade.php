@@ -194,12 +194,14 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-title">Main Menu</li>
-            <li>
-                <a href="{{ route('dashboard.index') }}" class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
-                    <i class="bi bi-speedometer2"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
+            @can('dashboard')
+                <li>
+                    <a href="{{ route('dashboard.index') }}" class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            @endcan
             <li>
                 <a href="{{ route('products.index') }}" class="{{ request()->routeIs('products.*') ? 'active' : '' }}">
                     <i class="bi bi-box-seam"></i>
@@ -246,10 +248,10 @@
             <div class="d-flex align-items-center gap-3">
                 @auth
                     <div class="dropdown">
-                        <button class="btn btn-link text-decoration-none dropdown-toggle d-flex align-items-center gap-2" 
-                                type="button" 
-                                id="userDropdown" 
-                                data-bs-toggle="dropdown" 
+                        <button class="btn btn-link text-decoration-none dropdown-toggle d-flex align-items-center gap-2"
+                                type="button"
+                                id="userDropdown"
+                                data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                             <div class="text-start d-none d-md-block">
