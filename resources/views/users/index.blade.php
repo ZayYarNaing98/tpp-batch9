@@ -49,9 +49,19 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-secondary" disabled>
-                                        <i class="bi bi-eye"></i> View
-                                    </button>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ route('users.edit', ['id' => $user->id]) }}"
+                                            class="btn btn-outline-secondary btn-sm">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </a>
+                                        <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-danger btn-sm"
+                                                onclick="return confirm('Are you sure you want to delete this user?')">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
