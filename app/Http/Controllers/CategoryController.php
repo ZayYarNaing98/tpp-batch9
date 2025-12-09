@@ -62,9 +62,18 @@ class CategoryController extends Controller
     {
         $category = $this->categoryRepository->show($request->id);
 
-        $category->update([
+        $data = [
             'name' => $request->name,
-        ]);
+        ];
+
+        // Handle image update if provided
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('categoryImages'), $imageName);
+            $data['image'] = $imageName;
+        }
+
+        $category->update($data);
 
         return redirect()->route('categories.index');
     }

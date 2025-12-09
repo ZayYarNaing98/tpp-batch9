@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.dashboard')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Product</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+@section('title', 'Products')
+@section('page-title', 'Products')
+
+@push('styles')
     <style>
         .product-card {
             transition: transform 0.2s, box-shadow 0.2s;
@@ -37,16 +33,20 @@
             right: 10px;
         }
     </style>
-</head>
+@endpush
 
-<body>
-    <div class="container my-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>Product Lists</h1>
+@section('content')
+    <div class="page-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1>Product Lists</h1>
+                <p>Manage your products</p>
+            </div>
             <a href="{{ route('products.create') }}" class="btn btn-success">
                 <i class="bi bi-plus-circle"></i> Create Product
             </a>
         </div>
+    </div>
 
         @if (count($products) > 0)
             <div class="row g-4">
@@ -102,10 +102,4 @@
                 <a href="{{ route('products.create') }}" class="btn btn-success">Create Product</a>
             </div>
         @endif
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+@endsection

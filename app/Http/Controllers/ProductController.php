@@ -72,13 +72,22 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->show($request->id);
 
-        $product->update([
+        $data = [
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'category_id' => $request->category_id,
             'status' => $request->has('status') ? true : false,
-        ]);
+        ];
+
+        // Handle image update if provided
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('productImages'), $imageName);
+            $data['image'] = $imageName;
+        }
+
+        $product->update($data);
 
         return redirect()->route('products.index');
     }
