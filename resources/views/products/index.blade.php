@@ -42,9 +42,11 @@
                 <h1>Product Lists</h1>
                 <p>Manage your products</p>
             </div>
-            <a href="{{ route('products.create') }}" class="btn btn-success">
-                <i class="bi bi-plus-circle"></i> Create Product
-            </a>
+            @can('productCreate')
+                <a href="{{ route('products.create') }}" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Create Product
+                </a>
+            @endcan
         </div>
     </div>
 
