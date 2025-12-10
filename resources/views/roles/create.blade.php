@@ -20,7 +20,7 @@
         <div class="card-body">
             <form action="{{ route('roles.store') }}" method="POST">
                 @csrf
-                
+
                 <div class="row g-3">
                     <div class="col-12">
                         <label for="name" class="form-label">Role Name <span class="text-danger">*</span></label>
@@ -38,7 +38,7 @@
                         <div class="border rounded p-3" style="max-height: 400px; overflow-y: auto;">
                             @forelse ($permissions as $permission)
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="permissions[]" 
+                                    <input class="form-check-input" type="checkbox" name="permissions[]"
                                         value="{{ $permission->id }}" id="permission_{{ $permission->id }}"
                                         {{ in_array($permission->id, old('permissions', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="permission_{{ $permission->id }}">
@@ -46,7 +46,7 @@
                                     </label>
                                 </div>
                             @empty
-                                <p class="text-muted mb-0">No permissions available. 
+                                <p class="text-muted mb-0">No permissions available.
                                     <a href="{{ route('permissions.create') }}">Create a permission first</a>.
                                 </p>
                             @endforelse

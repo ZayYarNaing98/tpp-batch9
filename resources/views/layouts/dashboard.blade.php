@@ -220,14 +220,14 @@
                     </a>
                 </li>
             @endcan
-            @can('userList')
+            {{-- @can('userList') --}}
                 <li>
                     <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
                         <i class="bi bi-people"></i>
                         <span>Users</span>
                     </a>
                 </li>
-            @endcan
+            {{-- @endcan --}}
             <li class="menu-title">Access Control</li>
             <li>
                 <a href="{{ route('roles.index') }}" class="{{ request()->routeIs('roles.*') ? 'active' : '' }}">

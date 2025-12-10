@@ -35,8 +35,9 @@ class RoleController extends Controller
 
     public function store(RoleRequest $request)
     {
+        // dd($request->all());
         $validatedData = $request->validated();
-        
+
         $this->roleRepository->store($validatedData);
 
         return redirect()->route('roles.index')->with('success', 'Role created successfully.');
@@ -46,7 +47,7 @@ class RoleController extends Controller
     {
         $role = $this->roleRepository->show($id);
         $permissions = $this->permissionRepository->index();
-        
+
         if (!$role) {
             return redirect()->route('roles.index')->with('error', 'Role not found.');
         }
@@ -57,7 +58,7 @@ class RoleController extends Controller
     public function update(RoleUpdateRequest $request, $id)
     {
         $validatedData = $request->validated();
-        
+
         $this->roleRepository->update($id, $validatedData);
 
         return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
