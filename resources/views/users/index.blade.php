@@ -16,6 +16,13 @@
         </div>
     </div>
 
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="card border-0 shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -28,6 +35,7 @@
                             <th>Phone</th>
                             <th>Address</th>
                             <th>Gender</th>
+                            <th>Role</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -41,6 +49,15 @@
                                 <td>{{ $user->phone ?? '-' }}</td>
                                 <td>{{ $user->address ?? '-' }}</td>
                                 <td>{{ $user->gender ?? '-' }}</td>
+                                <td>
+                                    @if($user->roles->count() > 0)
+                                        @foreach($user->roles as $role)
+                                            <span class="badge bg-primary">{{ $role->name }}</span>
+                                        @endforeach
+                                    @else
+                                        <span class="text-muted">No role</span>
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($user->status === 1)
                                         <span class="badge bg-success">Active</span>

@@ -118,6 +118,24 @@
                         @enderror
                     </div>
 
+                    <div class="col-md-6">
+                        <label for="role" class="form-label">Role</label>
+                        <select name="role" id="role" class="form-select @error('role') is-invalid @enderror">
+                            <option value="">No Role</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}" 
+                                    {{ old('role', $user->roles->first()?->id) == $role->id ? 'selected' : '' }}>
+                                    {{ $role->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('role')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
                     <div class="col-12">
                         <label for="image" class="form-label">Profile Image</label>
                         @if($user->image)

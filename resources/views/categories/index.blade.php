@@ -10,9 +10,11 @@
                 <h1>Category Listing</h1>
                 <p>Manage product categories</p>
             </div>
-            <a href="{{ route('categories.create') }}" class="btn btn-success">
-                <i class="bi bi-plus-circle"></i> Create Category
-            </a>
+            @can('categoryCreate')
+                <a href="{{ route('categories.create') }}" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Create Category
+                </a>
+            @endcan
         </div>
     </div>
 
@@ -34,7 +36,8 @@
                                 <td>{{ $category['id'] }}</td>
                                 <td class="fw-bold">{{ $category['name'] }}</td>
                                 <td>
-                                    <img src="{{ asset('categoryImages/' . $category->image) }}" alt="{{ $category->image }}"
+                                    <img src="{{ asset('categoryImages/' . $category->image) }}"
+                                        alt="{{ $category->image }}"
                                         style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
                                 </td>
                                 <td>
@@ -43,7 +46,8 @@
                                             class="btn btn-outline-secondary btn-sm">
                                             <i class="bi bi-pencil"></i> Edit
                                         </a>
-                                        <form action="{{ route('categories.delete', ['id' => $category->id]) }}" method="POST">
+                                        <form action="{{ route('categories.delete', ['id' => $category->id]) }}"
+                                            method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-outline-danger btn-sm"
                                                 onclick="return confirm('Are you sure you want to delete this category?')">

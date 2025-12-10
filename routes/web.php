@@ -5,6 +5,8 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
 
@@ -51,4 +53,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::post('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
     Route::post('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
+
+    // Roles
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/roles/store', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::post('/roles/{id}/update', [RoleController::class, 'update'])->name('roles.update');
+    Route::post('/roles/{id}/delete', [RoleController::class, 'delete'])->name('roles.delete');
+
+    // Permissions
+    Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
+    Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
+    Route::post('/permissions/store', [PermissionController::class, 'store'])->name('permissions.store');
+    Route::get('/permissions/{id}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
+    Route::post('/permissions/{id}/update', [PermissionController::class, 'update'])->name('permissions.update');
+    Route::post('/permissions/{id}/delete', [PermissionController::class, 'delete'])->name('permissions.delete');
 });

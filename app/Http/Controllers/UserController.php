@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Role\RoleRepositoryInterface;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     protected $userRepository;
+    protected $roleRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        RoleRepositoryInterface $roleRepository
+    ) {
         $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     public function index()
@@ -25,7 +31,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
     }
 
     public function store(UserRequest $request)
@@ -47,16 +54,27 @@ class UserController extends Controller
             $validatedData['password'] = bcrypt($validatedData['password']);
         }
 
-        $this->userRepository->store($validatedData);
+        $roleId = $validatedData['role'] ?? null;
+        unset($validatedData['role']);
 
-        return redirect()->route('users.index');
+        $user = $this->userRepository->store($validatedData);
+
+        if ($roleId) {
+            $role = Role::find($roleId);
+            if ($role) {
+                $user->assignRole($role);
+            }
+        }
+
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     public function edit($id)
     {
         $user = $this->userRepository->show($id);
+        $roles = Role::all();
 
-        return view('users.edit', compact('user'));
+        return view('users.edit', compact('user', 'roles'));
     }
 
     public function update(UserUpdateRequest $request)
@@ -70,21 +88,30 @@ class UserController extends Controller
             'status' => $request->has('status') ? true : false,
         ];
 
-        // Update password only if provided
         if ($request->filled('password')) {
             $data['password'] = bcrypt($request->password);
         }
-
-        // Handle image update if provided
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('productImages'), $imageName);
             $data['image'] = $imageName;
         }
 
-        $this->userRepository->update($request->id, $data);
+        $user = $this->userRepository->update($request->id, $data);
 
-        return redirect()->route('users.index');
+        if ($user) {
+            if ($request->filled('role')) {
+                $role = Role::find($request->role);
+                if ($role) {
+                    $user->syncRoles([$role]);
+                }
+            } else {
+                // If no role selected, remove all roles
+                $user->syncRoles([]);
+            }
+        }
+
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
     public function delete($id)

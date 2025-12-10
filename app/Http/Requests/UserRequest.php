@@ -29,6 +29,7 @@ class UserRequest extends FormRequest
             'address' => 'required|string',
             'gender' => 'required|string',
             'image' => 'required',
+            'role' => 'nullable|exists:roles,id',
         ];
     }
 }

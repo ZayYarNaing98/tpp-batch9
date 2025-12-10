@@ -9,7 +9,7 @@ class UserRepository implements UserRepositoryInterface
 {
     public function index()
     {
-        return User::get();
+        return User::with('roles')->get();
     }
 
     public function store($data)
