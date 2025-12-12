@@ -20,7 +20,7 @@ class BaseController extends Controller
 
     }
 
-    public function erorr($error, $errorMessage = [], $code = 500)
+    public function error($error, $errorMessage = [], $code = 500)
     {
         $response = [
             'code' => $code,
