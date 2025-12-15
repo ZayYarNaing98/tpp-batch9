@@ -3,17 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\BaseController;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends BaseController
 {
+
+    protected $categoryRepository;
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     public function index()
     {
-        $categories = Category::get();
+        $categories = $this->categoryRepository->index();
 
         $result = CategoryResource::collection($categories);
 
@@ -22,7 +28,7 @@ class CategoryController extends BaseController
 
     public function show($id)
     {
-        $category = Category::find($id);
+        $category = $this->categoryRepository->show($id);
 
         $result = new CategoryResource($category);
 
@@ -31,8 +37,6 @@ class CategoryController extends BaseController
 
     public function store(Request $request)
     {
-        // dd('hree');
-
         $validation = Validator::make($request->all(), [
             'name' => 'required|string',
             'image' => 'required',
